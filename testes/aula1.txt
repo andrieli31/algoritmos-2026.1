@@ -1,0 +1,3 @@
+Hoje estudei Java.
+Aprendi sobre MergeSort.
+Java é interessante.

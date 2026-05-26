@@ -1,0 +1,3 @@
+Hoje estudei QuickSort.
+Java apareceu novamente.
+Estruturas de dados.
