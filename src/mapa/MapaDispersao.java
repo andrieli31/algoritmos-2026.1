@@ -1,7 +1,12 @@
-public class MapaDispercao<T, K> {
+package mapa;
+
+import lista.ListaEncadeada;
+
+public class MapaDispersao<T, K> {
+
     private ListaEncadeada<NoMapa<T, K>> info[];
 
-    public MapaDispercao(int tamanho) {
+    public MapaDispersao(int tamanho) {
         info = new ListaEncadeada[tamanho];
     }
 
@@ -48,13 +53,41 @@ public class MapaDispercao<T, K> {
         return null;
     }
 
-    public double calcularFatorCarga(){
+    public double calcularFatorCarga() {
         int qtdElementos = 0;
         for (int i = 0; i < info.length; i++) {
             if (info[i] != null) {
-                qtdElementos = qtdElementos + info[i].obterComprimento();
+                qtdElementos +=
+                    info[i].obterComprimento();
             }
         }
         return 1.0 * qtdElementos / info.length;
+    }
+
+    public int getTamanho() {
+        return info.length;
+    }
+
+    /**
+     * Retorna todos os pares (chave, valor) do mapa
+     * como uma ListaEncadeada de NoMapa.
+     * Usado pela persistência para salvar o índice.
+     */
+    public ListaEncadeada<NoMapa<T, K>> entradas() {
+        ListaEncadeada<NoMapa<T, K>> resultado =
+            new ListaEncadeada<>();
+
+        for (int i = 0; i < info.length; i++) {
+            if (info[i] == null) continue;
+
+            NoLista<NoMapa<T, K>> p =
+                info[i].getPrimeiro();
+
+            while (p != null) {
+                resultado.inserir(p.getInfo());
+                p = p.getProximo();
+            }
+        }
+        return resultado;
     }
 }
