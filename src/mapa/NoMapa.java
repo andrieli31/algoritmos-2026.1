@@ -1,3 +1,5 @@
+package mapa;
+
 import java.util.Objects;
 
 public class NoMapa<T, K> {

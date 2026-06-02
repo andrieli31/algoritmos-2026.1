@@ -1,3 +1,5 @@
+package mapa;
+
 public class NoLista<T> {
 
     private T info;
