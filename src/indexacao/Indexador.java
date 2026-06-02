@@ -1,6 +1,7 @@
 package indexacao;
 
 import java.io.File;
+import utils.TextoUtils;
 import java.util.Scanner;
 
 import lista.ListaEncadeada;
@@ -48,8 +49,9 @@ public class Indexador {
 
             while (leitor.hasNext()) {
                 String token = leitor.next();
-                String palavra = normalizar(token);
-
+                String palavra =
+                	    TextoUtils.normalizar(token);
+                
                 if (deveIndexar(palavra)) {
                     String caminho =
                         arquivo.getAbsolutePath();
