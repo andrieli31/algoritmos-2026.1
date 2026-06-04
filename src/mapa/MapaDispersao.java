@@ -5,6 +5,7 @@ import lista.ListaEncadeada;
 public class MapaDispersao<T, K> {
 
     private ListaEncadeada<NoMapa<T, K>> info[];
+private static final double FATOR_CARGA_MAXIMO = 0.75;
 
     public MapaDispersao(int tamanho) {
         info = new ListaEncadeada[tamanho];
@@ -15,6 +16,10 @@ public class MapaDispersao<T, K> {
     }
 
     public void inserir(K chave, T dado) {
+
+          if (calcularFatorCarga() > FATOR_CARGA_MAXIMO) {
+        rehash();
+    }
         int indice = calcularHash(chave);
 
         if (info[indice] == null) {
@@ -67,6 +72,27 @@ public class MapaDispersao<T, K> {
     public int getTamanho() {
         return info.length;
     }
+
+    private void rehash() {
+    ListaEncadeada<NoMapa<T, K>>[] novoArray =
+        new ListaEncadeada[info.length * 2];
+
+    // Troca o array ANTES de reinserir
+    // para que calcularHash use o novo tamanho
+    info = novoArray;
+
+    // Percorre todas as entradas do array antigo
+    ListaEncadeada<NoMapa<T, K>> entradas = entradas();
+    NoLista<NoMapa<T, K>> p = entradas.getPrimeiro();
+
+    while (p != null) {
+        inserir(
+            p.getInfo().getChave(),
+            p.getInfo().getValor()
+        );
+        p = p.getProximo();
+    }
+}
 
     /**
      * Retorna todos os pares (chave, valor) do mapa
